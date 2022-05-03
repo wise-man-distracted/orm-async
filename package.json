@@ -19,6 +19,7 @@
   "homepage": "https://github.com/sergiomoura/my-so-que-nao#readme",
   "dependencies": {
     "express": "^4.18.1",
+    "mariadb": "^3.0.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.19.0"
   },
