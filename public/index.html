@@ -12,7 +12,32 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  
+  <div id="registro">
+    <form>
+      <label>
+        <span>E-mail:</span>
+        <input type="email" name="email">
+      </label>
+      <label>
+        <span>Senha:</span>
+        <input type="password" name="senha">
+      </label>
+      <label>
+        <span>Confirme a senha:</span>
+        <input type="password" name="confirmacao" onblur="validaCampo(event)">
+      </label>
+      <label class="foto-container">
+        <span>Selecione uma foto:</span>
+        <input type="file" name="confirmacao">
+      </label>
+      <div class="controles">
+        <button>Cancelar</button>
+        <button class="primary">Entrar</button>
+      </div>
+      <img id="output" width="200" />
+    </form>
+  </div>
+  <div id="app">
   <header>
     <div class="container">
       <div class="personal-data">
@@ -140,6 +165,7 @@
   <footer>
     <div class="container">&copy; My SóQueNão - Nenhum direito reservado. Use como quiser.</div>
   </footer>
+</div>
   <script src="js/index.js"></script> 
   
 </body>
