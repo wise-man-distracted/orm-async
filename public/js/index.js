@@ -15,16 +15,27 @@ const onFileChange = evento => {
     let img = document.getElementById('output')
     img.src = URL.createObjectURL(evento.target.files[0])
 }
+let formCadastro = document.querySelector('#formCadastro')
 let inputEmail = document.querySelector('#registro > form input[type=email]')
 let inputSenha = document.querySelector('#registro > form input[type=password]')
 let inputFile = document.querySelector('#registro > form input[type=file]')
 
+console.log(formCadastro)
 inputEmail.addEventListener("blur", validaCampo)
 inputSenha.addEventListener("blur", validaCampo)
 inputFile.addEventListener("change", onFileChange)
 inputSenha.onblur = validaCampo
 
-
+formCadastro.addEventListener('submit', (e) => {
+    console.log('Formulário enviado')
+    e.preventDefault()
+    let formData = new FormData(formCadastro)
+    fetch('https://localhost:3000/api/v1/usuarios?q=4', {
+        method: 'post',
+        body: formData,
+        headers: {'Content-Type': 'multipart/form-data'}
+    })
+})
 
 
 
