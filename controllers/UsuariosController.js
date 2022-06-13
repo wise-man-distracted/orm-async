@@ -22,6 +22,12 @@ module.exports = {
     },
     registrar: async (req, res) => {
         try {
+            return res.json({
+                body: req.body,
+                file: req.file
+            })
+        }
+        /* try {
             const { nome, email, senha, foto } = req.body;
             const hash = bcrypt.hashSync(senha, 10)
             const verificarUsuario = await Usuario.findOne({where: {email: email}})
@@ -37,11 +43,11 @@ module.exports = {
                 }
             )
             return res.status(201).json(novoUsuario)
-        }
+        } */
         catch(error) {
             console.log(error);
             return res.status(401).json({error})
 
-        }
+        } 
     }
 }
