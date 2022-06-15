@@ -28,9 +28,9 @@ inputEmail.addEventListener("blur", validaCampo)
 inputSenha.addEventListener("blur", validaCampo)
 inputFile.addEventListener("change", onFileChange)
 
-formCadastro.addEventListener('submit', (e) => {
-    console.log('Formulário enviado')
+formCadastro.addEventListener('submit', async (e) => {
     e.preventDefault()
+    console.log('Formulário enviado')
 
     let reqBody = {
         nome:inputNome.value,
@@ -39,13 +39,25 @@ formCadastro.addEventListener('submit', (e) => {
     }
 
     let formData = new FormData(formCadastro)
-    fetch('http://localhost:3000/api/v1/usuarios', {
+
+    let response = await fetch('http://localhost:3000/api/v1/usuarios', {
         method: 'POST',
         body: formData,
         /* headers: {
             'Content-Type': 'multipart/form-data'
         } */
     })
+    if (response.status == 409) {
+        alert("Usuário já cadstrado")
+    }
+    if (response.status == 500) {
+        alert("Erro. Tente novamente mais tarde.")
+    }
+    if (response.status == 201) {
+        alert("Registrado com sucesso... mudar tela interna")
+    }
+    let usuario = await response.json();
+    console.log(usuario);
 })
 
 

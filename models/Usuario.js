@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
                 unique: true
               },
               senha:{
-                type: DataTypes.STRING(64),
+                type: DataTypes.STRING,
                 allowNull: false
               },
               foto: {
-                type: DataTypes.STRING(45),
+                type: DataTypes.STRING,
                 allowNull: true
               }
         },
