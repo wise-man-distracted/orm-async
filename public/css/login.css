@@ -1,0 +1,30 @@
+#login {
+  width: 400px;
+  margin: 200px auto;
+  padding: 40px;
+  background-color: var(--primary-darker);
+  color: #FFF;
+  
+}
+
+#login form {
+  display: flex;
+  flex-direction: column;
+}
+
+#login form label span{
+  display: block;
+}
+
+#login form label input{
+  width:100%
+}
+#login span {
+  margin-top: 15px;
+}
+
+#login a {
+  text-decoration: none;
+  color: rgb(177, 177, 177);
+  margin-top: 10px
+}

@@ -1,16 +1,16 @@
-const validaCampo = (evento)=> {
+const validaCampo = (evento) => {
 
 
     console.log(evento.target.name)
-    if(evento.target.value == "") {
+    if (evento.target.value == "") {
         evento.target.style.outline = "2px solid white"
         evento.target.setAttribute('placeholder', `Preencha o campo ${evento.target.name}`)
     } else {
         evento.target.style.outline = "2px solid black"
         evento.target.setAttribute('placeholder', '')
- 
+
     }
-    }
+}
 const onFileChange = evento => {
     let img = document.getElementById('output')
     img.src = URL.createObjectURL(evento.target.files[0])
@@ -33,7 +33,7 @@ formCadastro.addEventListener('submit', async (e) => {
     console.log('Formulário enviado')
 
     let reqBody = {
-        nome:inputNome.value,
+        nome: inputNome.value,
         email: inputEmail.value,
         senha: inputSenha.value,
     }
@@ -54,12 +54,29 @@ formCadastro.addEventListener('submit', async (e) => {
         alert("Erro. Tente novamente mais tarde.")
     }
     if (response.status == 201) {
-        alert("Registrado com sucesso... mudar tela interna")
+        // alert("Registrado com sucesso... mudar tela interna")
+        let usuario = await response.json()
+        mostrarApp(usuario)
     }
     let usuario = await response.json();
     console.log(usuario);
 })
 
+const mostrarApp = (usuario) => {
+
+    document.getElementById("registro").style.display = 'none'
+    document.getElementById("app").style.display = 'block'
+    document.getElementById("app-nome").innerText = usuario.nome
+
+    let aEmail = document.getElementById('app-email')
+    aEmail.innerText = usuario.email
+    aEmail.setAttribute('href', `mailto:${usuario.email}`)
+
+    let imgAvatar = document.getElementById('app-avatar')
+    imgAvatar.setAttribute('alt', `Foto de ${usuario.nome}`)
+    imgAvatar.setAttribute('src', `img/avatares/${usuario.foto}`)
+    console.log(usuario)
+}
 
 
 
