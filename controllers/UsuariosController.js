@@ -1,6 +1,8 @@
 const { Usuario } = require('../models');
 const bcrypt = require('bcrypt')
 const { Op } = require('sequelize')
+const jwt = require('jsonwebtoken');
+
 module.exports = {
     buscar: async (req, res) => {
         let trechoBuscado = req.query.q;
@@ -46,5 +48,31 @@ module.exports = {
             console.log(error);
             res.status(500).json({error});
         }
+    },
+    login: async (req, res) => {
+        const loginFail = {error: "Falha no login"}
+        
+        let {email, senha} = req.body
+        let u 
+        
+        try {
+            u = await Usuario.findOne({where:{email}})
+        } catch (error) {
+            return res.status(500).json({error:'Erro interno. Tente novamente mais tarde.'})
+        }
+
+        if(u === null) {
+            return res.status(403).json(loginFail)
+        }
+        let senhaOk = bcrypt.compareSync(senha, u.senha)
+
+        if(senhaOk){
+            u = u.toJSON()
+            let token = jwt.sign(u, 'SEGREDO')
+            return res.status(200).json({msg:'Sucesso!', token})
+        } else {
+            return res.status(403).json(loginFail)
+        }
+
     }
 }

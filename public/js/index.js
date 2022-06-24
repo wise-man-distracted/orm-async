@@ -21,12 +21,38 @@ let inputEmail = document.querySelector('#registro > form input[type=email]')
 let inputSenha = document.querySelector('#registro > form input[type=password]')
 let inputConfirm = document.querySelector('#registro > form input[name=confirmacao]')
 let inputFile = document.querySelector('#registro > form input[type=file]')
+let formLogin = document.getElementById('formLogin')
+
 
 console.log(formCadastro)
 inputNome.addEventListener("blur", validaCampo)
 inputEmail.addEventListener("blur", validaCampo)
 inputSenha.addEventListener("blur", validaCampo)
 inputFile.addEventListener("change", onFileChange)
+
+formLogin.addEventListener('submit', onFormLoginSubmit)
+
+function onFormLoginSubmit(e){
+    e.preventDefault()
+    login()
+}
+
+async function login(){
+    let email = document.getElementById('login-email').value
+    let senha = document.getElementById('login-senha').value
+
+    let response = await fetch(
+        'http://localhost:3000/api/v1/usuarios/login',
+        {
+            method:'POST',
+            body: JSON.stringify({email, senha}),
+            headers: {
+                'Content-Type':'application/json'
+            }
+        }
+    )
+}
+
 
 formCadastro.addEventListener('submit', async (e) => {
     e.preventDefault()
@@ -43,9 +69,9 @@ formCadastro.addEventListener('submit', async (e) => {
     let response = await fetch('http://localhost:3000/api/v1/usuarios', {
         method: 'POST',
         body: formData,
-        /* headers: {
-            'Content-Type': 'multipart/form-data'
-        } */
+        headers: {
+            'cfontent-type': 'multipart/form-data'
+        }
     })
     if (response.status == 409) {
         alert("Usuário já cadstrado")
