@@ -51,6 +51,14 @@ async function login(){
             }
         }
     )
+    if(response.status == 200){
+        let corpoDaResposta = await response.json()
+        sessionStorage.setItem('token', corpoDaResposta.token)
+        sessionStorage.setItem('usuario', JSON.stringify(corpoDaResposta.usuario))
+
+        mostrarApp(corpoDaResposta.usuario)
+        loadAmigos()
+    }
 }
 
 
@@ -91,6 +99,7 @@ formCadastro.addEventListener('submit', async (e) => {
 const mostrarApp = (usuario) => {
 
     document.getElementById("registro").style.display = 'none'
+    document.getElementById("login").style.display = 'none'
     document.getElementById("app").style.display = 'block'
     document.getElementById("app-nome").innerText = usuario.nome
 
@@ -104,7 +113,18 @@ const mostrarApp = (usuario) => {
     console.log(usuario)
 }
 
-
+async function loadAmigos() {
+    let response = fetch(
+        'http://localhost:3000/api/v1/amigos',
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': `bearer ${sessionStorage.getItem("token")}`
+            }
+        }
+    )
+    console.log(response)
+}
 
 
 

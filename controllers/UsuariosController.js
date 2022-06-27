@@ -68,8 +68,14 @@ module.exports = {
 
         if(senhaOk){
             u = u.toJSON()
+
+            delete u.senha
+            delete u.createdAt
+            delete u.updatedAt
+            delete u.deletedAt
+
             let token = jwt.sign(u, 'SEGREDO')
-            return res.status(200).json({msg:'Sucesso!', token})
+            return res.status(200).json({usuario: u, token})
         } else {
             return res.status(403).json(loginFail)
         }
