@@ -74,7 +74,7 @@ module.exports = {
             delete u.updatedAt
             delete u.deletedAt
 
-            let token = jwt.sign(u, 'SEGREDO')
+            let token = jwt.sign(u, process.env.JWT_SECRET)
             return res.status(200).json({usuario: u, token})
         } else {
             return res.status(403).json(loginFail)
