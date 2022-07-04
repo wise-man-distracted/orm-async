@@ -10,6 +10,7 @@ const UsuariosRouter = require('./routes/UsuariosRouter');
 const AmigosRouter = require('./routes/UsuariosRouter');
 const VerificaExistenciaDeToken = require('./middleware/VerificaExistenciaDeToken');
 const ValidarToken = require('./middleware/ValidarToken');
+const PostsRouter = require('./routes/PostsRouter');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/v1/usuarios', UsuariosRouter);
+app.use('/api/v1/posts', PostsRouter);
 app.use('/api/v1/amigos', VerificaExistenciaDeToken, ValidarToken, AmigosRouter);
 
 

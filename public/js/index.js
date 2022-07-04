@@ -15,20 +15,27 @@ const onFileChange = evento => {
     let img = document.getElementById('output')
     img.src = URL.createObjectURL(evento.target.files[0])
 }
+ const onPostFileChange = evento => {
+    let img = document.getElementById('output-post')
+    img.src = URL.createObjectURL(evento.target.files[0])
+} 
 let formCadastro = document.querySelector('#formCadastro')
 let inputNome = document.getElementById('nome')
 let inputEmail = document.querySelector('#registro > form input[type=email]')
 let inputSenha = document.querySelector('#registro > form input[type=password]')
 let inputConfirm = document.querySelector('#registro > form input[name=confirmacao]')
 let inputFile = document.querySelector('#registro > form input[type=file]')
+let inputFilePostagem = document.querySelector('#formNovaPublicacao > label > input[type=file]')
 let formLogin = document.getElementById('formLogin')
+let formPost = document.getElementById('formNovaPublicacao')
 
 
-console.log(formCadastro)
+
 inputNome.addEventListener("blur", validaCampo)
 inputEmail.addEventListener("blur", validaCampo)
 inputSenha.addEventListener("blur", validaCampo)
 inputFile.addEventListener("change", onFileChange)
+inputFilePostagem.addEventListener("change", onPostFileChange)
 
 formLogin.addEventListener('submit', onFormLoginSubmit)
 
@@ -60,6 +67,7 @@ async function login(){
         loadAmigos()
     }
 }
+
 
 
 formCadastro.addEventListener('submit', async (e) => {
@@ -95,6 +103,37 @@ formCadastro.addEventListener('submit', async (e) => {
     let usuario = await response.json();
     console.log(usuario);
 })
+formPost.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    console.log('Publicacao enviada')
+
+    let textoPublicacao = document.getElementById('textNovaPublicacao')
+    let fotoPublicacao = document.getElementById('imagemNovaPublicacao')
+
+    let reqBody = {
+        texto: textoPublicacao.value,
+        foto: fotoPublicacao.value
+    }
+
+    let formPublicacao = new FormData(formPost)
+
+    let response = await fetch('http://localhost:3000/api/v1/posts', {
+        method: 'POST',
+        body: formPublicacao,
+        headers: {
+          'Authorization': `bearer ${sessionStorage.getItem('token')}`,
+          //'content-type': 'multipart/form-data'
+        }
+    })
+   
+    if (response.status == 500) {
+        alert("Erro. Tente novamente mais tarde")
+    }
+    if (response.status == 201) {
+        
+       
+    }
+})
 
 const mostrarApp = (usuario) => {
 
@@ -123,18 +162,7 @@ async function loadAmigos() {
             }
         }
     )
-    console.log(response)
 }
-
-
-
-
-
-
-
-
-
-
 
 
 let listaDeAmigos = document.getElementById('listaDeAmigos');

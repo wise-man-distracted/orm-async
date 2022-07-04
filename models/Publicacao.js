@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
               type: DataTypes.TEXT
             },
             imagem: {
-              type: DataTypes.STRING(45)
+              type: DataTypes.STRING
             },
             usuarios_id: {
               type: DataTypes.INTEGER,
